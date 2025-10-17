@@ -20,7 +20,8 @@ class DepartmentsTable
                     ->numeric()
                     ->sortable(),
                 TextColumn::make('cost')
-                    ->money("IDR")
+                    ->formatStateUsing(fn($state) => 'Rp ' . number_format($state, 0, ',', '.'))
+                    ->label('Biaya')
                     ->sortable(),
                 TextColumn::make('created_at')
                     ->dateTime()

@@ -16,18 +16,33 @@ class TransactionsTable
             ->columns([
                 TextColumn::make('code')
                     ->searchable(),
+                TextColumn::make('user.name')
+                    ->searchable(),
+                TextColumn::make('user.phone')
+                    ->searchable(),
                 TextColumn::make('payment_method')
                     ->searchable(),
                 TextColumn::make('payment_status')
-                    ->searchable(),
+                    ->badge()
+                    ->color(fn($state) => match ($state) {
+                        'pending' => 'warning',
+                        'success' => 'success',
+                        'failed' => 'danger',
+                        default => 'secondary',
+                    }),
                 TextColumn::make('payment_proof')
+                    ->label("Bukti Pembayaran")
+                    ->width(450),
+                TextColumn::make('department.name')
+                    ->label("Department")
                     ->searchable(),
-                TextColumn::make('user_id')
-                    ->numeric()
-                    ->sortable(),
-                TextColumn::make('department_id')
-                    ->numeric()
-                    ->sortable(),
+                TextColumn::make('department.semester')
+                    ->label("Semester")
+                    ->searchable(),
+                TextColumn::make('department.cost')
+                    ->label("Cost")
+                    ->formatStateUsing(fn($state) => 'Rp ' . number_format($state, 0, ',', '.'))
+                    ->searchable(),
                 TextColumn::make('created_at')
                     ->dateTime()
                     ->sortable()

@@ -35,5 +35,10 @@ COPY . /var/www/html
 
 WORKDIR /var/www/html
 
+RUN mkdir -p bootstrap/cache storage/framework/{cache,sessions,views} storage/logs \
+    && touch storage/logs/laravel.log \
+    && chown -R www-data:www-data storage bootstrap/cache \
+    && chmod -R 775 storage bootstrap/cache storage/logs 
+
 
 CMD ["php-fpm"]
